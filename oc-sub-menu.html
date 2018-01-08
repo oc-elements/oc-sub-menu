@@ -1,0 +1,53 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
+<link rel="import" href="/bower_components/app-menu/app-menu.html">
+<link rel="import" href="/bower_components/app-menu/app-submenu.html">
+<link rel="import" href="/bower_components/app-menu/app-submenu.html">
+
+<dom-module id="sub-menu">
+  <template>
+    <style is="custom-style">
+      :host {
+        --app-menu-color: whitesmoke;
+        --primary-color: #F62A5A;
+        --app-menu-selected-bg-color: #989898;
+        --app-menu-background-color: grey;
+      }
+
+      app-menu > a {
+        padding-left: 40px;
+      }
+    </style>
+    <template is="dom-repeat" items="{{menus}}">
+      <app-submenu>
+        <div class="app-menu-item" slot="submenu-trigger">
+          <app-menu-icon-item>[[item.name]]</app-menu-icon-item>
+          <iron-icon icon="expand-more" class="expand-icon"></iron-icon>
+        </div>
+        <app-menu slot="submenu-content">
+          <template is="dom-repeat" items="{{item.subMenus}}" as="subMenu">
+            <a class="app-menu-item" href="[[rootPath]][[subMenu.href]]">[[subMenu.name]]</a>
+          </template>
+        </app-menu>
+      </app-submenu>
+    </template>
+  </template>
+  <script>
+	  class SubMenu extends Polymer.Element {
+		  static get is() {
+			  return 'sub-menu';
+		  }
+
+		  static get properties() {
+			  return {
+				  menus: {
+					  type: Array,
+					  value: [],
+				  },
+			  };
+		  }
+	  }
+
+	  window.customElements.define(SubMenu.is, SubMenu);
+  </script>
+</dom-module>
+
