@@ -1,6 +1,10 @@
 <link rel="import" href="../polymer/polymer-element.html">
+
 <link rel="import" href="../app-menu/app-menu.html">
 <link rel="import" href="../app-menu/app-submenu.html">
+
+<link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-icon/iron-icon.html">
 
 <dom-module id="oc-sub-menu">
     <template>
@@ -9,35 +13,52 @@
                 --app-menu-color: whitesmoke;
                 --primary-color: #e0992f;
                 --app-menu-selected-bg-color: #292317;
-                --app-menu-background-color: #292317;
+                --app-menu-background-color: #3d332a;
                 --app-menu-border: 1px solid #483f36;
             }
 
-            app-menu > a {
-                padding-left: 40px;
+            a {
                 color: #fff;
+            }
+
+            .sub-content {
+                padding-left: 50px;
             }
 
             .iron-selected {
                 border-left: 4px solid var(--primary-color);
             }
-            .submenu-container {
-                border-bottom: var(--app-menu-border);
-            }
         </style>
-        <template is="dom-repeat" items="{{menus}}">
-            <app-submenu>
-                <div class="app-menu-item" slot="submenu-trigger">
-                    <app-menu-icon-item>[[item.name]]</app-menu-icon-item>
-                    <iron-icon icon="expand-more" class="expand-icon"></iron-icon>
-                </div>
-                <app-menu slot="submenu-content">
-                    <template is="dom-repeat" items="{{item.subMenus}}" as="subMenu">
-                        <a class="app-menu-item" href="[[rootPath]][[subMenu.href]]">[[subMenu.name]]</a>
-                    </template>
-                </app-menu>
-            </app-submenu>
-        </template>
+        <app-menu>
+            <template is="dom-repeat" items="{{menus}}">
+                <!-- Enter here if nav item has sub menus -->
+                <template is="dom-if" if="[[_menuHasSubMenus(item.subMenus)]]">
+                    <app-submenu>
+                        <div class="app-menu-item" slot="submenu-trigger">
+                            <app-menu-icon-item>
+                                <iron-icon icon="[[item.icon]]" style="padding-right: 10px"></iron-icon>
+                                [[item.name]]
+                            </app-menu-icon-item>
+                            <iron-icon icon="expand-more" class="expand-icon"></iron-icon>
+                        </div>
+                        <app-menu slot="submenu-content">
+                            <template is="dom-repeat" items="{{item.subMenus}}" as="subMenu">
+                                <a class="app-menu-item sub-content" href="[[rootPath]][[subMenu.href]]">[[subMenu.name]]</a>
+                            </template>
+                        </app-menu>
+                    </app-submenu>
+                </template>
+
+                <template is="dom-if" if="[[!_menuHasSubMenus(item.subMenus)]]">
+                    <a class="app-menu-item" href="[[rootPath]][[item.href]]">
+                        <app-menu-icon-item>
+                            <iron-icon icon="[[item.icon]]" style="padding-right: 10px"></iron-icon>
+                            [[item.name]]
+                        </app-menu-icon-item>
+                    </a>
+                </template>
+            </template>
+        </app-menu>
     </template>
     <script>
 		class OcSubMenu extends Polymer.Element {
@@ -50,6 +71,8 @@
 					/* Example of the menus property
                       {
                         name: "Orders",
+                        icon: "icons:shopping-cart" // Optional
+                        href: "url" // This is only needed if there is no submenus
                         subMenus: [
                             {
                                 href: "orders/active",
@@ -66,6 +89,10 @@
 						value: [],
 					},
 				};
+			}
+
+			_menuHasSubMenus(subMenus) {
+				return subMenus && subMenus.length !== -1;
 			}
 		}
 
