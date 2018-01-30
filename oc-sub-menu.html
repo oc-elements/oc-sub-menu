@@ -7,13 +7,22 @@
         <style is="custom-style">
             :host {
                 --app-menu-color: whitesmoke;
-                --primary-color: #F62A5A;
-                --app-menu-selected-bg-color: #989898;
-                --app-menu-background-color: grey;
+                --primary-color: #e0992f;
+                --app-menu-selected-bg-color: #292317;
+                --app-menu-background-color: #292317;
+                --app-menu-border: 1px solid #483f36;
             }
 
             app-menu > a {
                 padding-left: 40px;
+                color: #fff;
+            }
+
+            .iron-selected {
+                border-left: 4px solid var(--primary-color);
+            }
+            .submenu-container {
+                border-bottom: var(--app-menu-border);
             }
         </style>
         <template is="dom-repeat" items="{{menus}}">
