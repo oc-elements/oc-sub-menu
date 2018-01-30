@@ -3,7 +3,8 @@
   "description": "Menu Item with the ability for Sub-Menu Item",
   "main": "oc-sub-menu.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^2.0.0"
+    "polymer": "Polymer/polymer#^2.0.0",
+    "app-menu": "^2.1.1"
   },
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
