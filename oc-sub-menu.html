@@ -29,7 +29,10 @@
                 border-left: 4px solid var(--primary-color);
             }
         </style>
-        <app-menu>
+
+        <app-location route="{{route}}" query-params="{{queryParams}}"></app-location>
+
+        <app-menu id="app-menu" selected="{{_selectedMenu}}" attr-for-selected="menu">
             <template is="dom-repeat" items="{{menus}}">
                 <!-- Enter here if nav item has sub menus -->
                 <template is="dom-if" if="[[_menuHasSubMenus(item.subMenus)]]">
@@ -41,16 +44,18 @@
                             </app-menu-icon-item>
                             <iron-icon icon="expand-more" class="expand-icon"></iron-icon>
                         </div>
-                        <app-menu slot="submenu-content">
+                        <app-menu slot="submenu-content" selected="{{_selectedSubMenu}}"
+                                  attr-for-selected="subselected">
                             <template is="dom-repeat" items="{{item.subMenus}}" as="subMenu">
-                                <a class="app-menu-item sub-content" href="[[rootPath]][[subMenu.href]]">[[subMenu.name]]</a>
+                                <a class="app-menu-item sub-content" href="[[rootPath]][[subMenu.href]]"
+                                   subselected="[[subMenu.href]]">[[subMenu.name]]</a>
                             </template>
                         </app-menu>
                     </app-submenu>
                 </template>
 
                 <template is="dom-if" if="[[!_menuHasSubMenus(item.subMenus)]]">
-                    <a class="app-menu-item" href="[[rootPath]][[item.href]]">
+                    <a class="app-menu-item" href="[[rootPath]][[item.href]]" menu="[[item.href]]">
                         <app-menu-icon-item>
                             <iron-icon icon="[[item.icon]]" style="padding-right: 10px"></iron-icon>
                             [[item.name]]
@@ -88,7 +93,38 @@
 						type: Array,
 						value: [],
 					},
+					_selectedMenu: Object,
+					_selectedSubMenu: Object,
+					route: {
+						type: Object,
+						observer: '_onRouteChange'
+					}
 				};
+			}
+
+			/* This logic that will drives the selection of menu by the url
+			* NOTE: Any changes to the config template will have a impact on this code
+			* */
+			_onRouteChange(newRoute, oldRoute) {
+				menus:
+					for (let i = 0; i < this.menus.length; i++) {
+						if (this.menus[i].href && newRoute.path.includes(this.menus[i].href)) {
+							this._selectedMenu = this.menus[i].href;
+							this._selectedSubMenu = null;
+							break;
+						}
+
+						if (!this.menus[i].href) {
+							const subMenus = this.menus[i].subMenus;
+							for (let j = 0; j < subMenus.length; j++) {
+								if (newRoute.path.includes(subMenus[j].href)) {
+									this._selectedSubMenu = subMenus[j].href;
+									this._selectedMenu = null;
+									break menus;
+								}
+							}
+						}
+					}
 			}
 
 			_menuHasSubMenus(subMenus) {
