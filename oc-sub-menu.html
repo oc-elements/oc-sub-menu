@@ -26,8 +26,8 @@
             }
 
             .app-menu-item-name {
-                font-size:16px;
-                font-weight:400;
+                font-size:16px !important;
+                font-weight:400 !important;
             }
 
             .iron-selected {
@@ -41,13 +41,13 @@
                 <template is="dom-if" if="[[_menuHasSubMenus(item.subMenus)]]">
                     <app-submenu>
                         <div class="app-menu-item app-menu-item-name" slot="submenu-trigger">
-                            <app-menu-icon-item style="font-size:30px">
+                            <app-menu-icon-item>
                                 <iron-icon icon="[[item.icon]]" style="padding-right: 10px"></iron-icon>
                                 [[item.name]]
                             </app-menu-icon-item>
                             <iron-icon icon="expand-more" class="expand-icon"></iron-icon>
                         </div>
-                        <app-menu slot="submenu-content">
+                        <app-menu slot="submenu-content app-menu-item-name">
                             <template is="dom-repeat" items="{{item.subMenus}}" as="subMenu">
                                 <a class="app-menu-item sub-content" href="[[rootPath]][[subMenu.href]]">[[subMenu.name]]</a>
                             </template>
@@ -67,14 +67,15 @@
         </app-menu>
     </template>
     <script>
-		class OcSubMenu extends Polymer.Element {
-			static get is() {
-				return 'oc-sub-menu';
 			}
+        class OcSubMenu extends Polymer.Element {
+            static get is() {
+                return 'oc-sub-menu';
+            }
 
-			static get properties() {
-				return {
-					/* Example of the menus property
+            static get properties() {
+                return {
+                    /* Example of the menus property
                       {
                         name: "Orders",
                         icon: "icons:shopping-cart" // Optional
