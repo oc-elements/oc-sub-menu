@@ -25,29 +25,28 @@
                 padding-left: 50px;
             }
 
-            .app-menu-item-name {
-                font-size:16px !important;
-                font-weight:400 !important;
+            .app-menu-item {
+                font-size:16px;
+                font-weight:400;
             }
 
             .iron-selected {
                 border-left: 4px solid var(--primary-color);
             }
-
         </style>
         <app-menu>
             <template is="dom-repeat" items="{{menus}}">
                 <!-- Enter here if nav item has sub menus -->
                 <template is="dom-if" if="[[_menuHasSubMenus(item.subMenus)]]">
                     <app-submenu>
-                        <div class="app-menu-item app-menu-item-name" slot="submenu-trigger">
+                        <div class="app-menu-item" slot="submenu-trigger">
                             <app-menu-icon-item>
                                 <iron-icon icon="[[item.icon]]" style="padding-right: 10px"></iron-icon>
                                 [[item.name]]
                             </app-menu-icon-item>
                             <iron-icon icon="expand-more" class="expand-icon"></iron-icon>
                         </div>
-                        <app-menu slot="submenu-content app-menu-item-name">
+                        <app-menu slot="submenu-content">
                             <template is="dom-repeat" items="{{item.subMenus}}" as="subMenu">
                                 <a class="app-menu-item sub-content" href="[[rootPath]][[subMenu.href]]">[[subMenu.name]]</a>
                             </template>
@@ -56,7 +55,7 @@
                 </template>
 
                 <template is="dom-if" if="[[!_menuHasSubMenus(item.subMenus)]]">
-                    <a class="app-menu-item app-menu-item-name " href="[[rootPath]][[item.href]]">
+                    <a class="app-menu-item" href="[[rootPath]][[item.href]]">
                         <app-menu-icon-item>
                             <iron-icon icon="[[item.icon]]" style="padding-right: 10px"></iron-icon>
                             [[item.name]]
