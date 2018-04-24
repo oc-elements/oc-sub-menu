@@ -22,17 +22,23 @@
             }
 
             .sub-content {
-                padding-left: 50px;
+                border-left: 4px solid #483f36;
+                line-height: 10px;
+                min-height: 35px;
+                margin-bottom: 5px;
+                margin-left: 50px;
             }
 
             .app-menu-item {
-                font-size:16px;
-                font-weight:400;
+                font-size: 16px;
+                font-weight: 400;
+                padding-left: 10px;
             }
 
             .iron-selected {
                 border-left: 4px solid var(--primary-color);
             }
+
         </style>
         <app-menu>
             <template is="dom-repeat" items="{{menus}}">
@@ -41,14 +47,16 @@
                     <app-submenu>
                         <div class="app-menu-item" slot="submenu-trigger">
                             <app-menu-icon-item>
-                                <iron-icon icon="[[item.icon]]" style="padding-right: 10px"></iron-icon>
-                                [[item.name]]
+                                <iron-icon icon="[[item.icon]]"></iron-icon>
+                                <span style="font-size: 100%; vertical-align: middle">[[item.name]]</span>
                             </app-menu-icon-item>
                             <iron-icon icon="expand-more" class="expand-icon"></iron-icon>
                         </div>
                         <app-menu slot="submenu-content">
                             <template is="dom-repeat" items="{{item.subMenus}}" as="subMenu">
-                                <a class="app-menu-item sub-content" href="[[rootPath]][[subMenu.href]]">[[subMenu.name]]</a>
+                                <a class="app-menu-item sub-content" href="[[rootPath]][[subMenu.href]]">
+                                    <span style="font-size: 90%">[[subMenu.name]]</span>
+                                </a>
                             </template>
                         </app-menu>
                     </app-submenu>
@@ -66,14 +74,14 @@
         </app-menu>
     </template>
     <script>
-        class OcSubMenu extends Polymer.Element {
-            static get is() {
-                return 'oc-sub-menu';
-            }
+		class OcSubMenu extends Polymer.Element {
+			static get is() {
+				return 'oc-sub-menu';
+			}
 
-            static get properties() {
-                return {
-                    /* Example of the menus property
+			static get properties() {
+				return {
+					/* Example of the menus property
                       {
                         name: "Orders",
                         icon: "icons:shopping-cart" // Optional
