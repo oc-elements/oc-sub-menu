@@ -10,10 +10,9 @@
     <template>
         <style is="custom-style">
             :host {
-                --app-menu-color: whitesmoke;
                 --primary-color: #e0992f;
-                --app-menu-selected-bg-color: #292317;
-                --app-menu-background-color: #3d332a;
+                --app-menu-selected-bg-color: var(--app-secondary-color);
+                --app-menu-background-color: var(--app-primary-color);
                 --app-menu-border: 1px solid #483f36;
             }
 
@@ -22,7 +21,7 @@
             }
 
             .sub-content {
-                border-left: 4px solid #483f36;
+                border-left: 4px solid var(--app-secondary-color);
                 line-height: 10px;
                 min-height: 35px;
                 margin-bottom: 5px;
@@ -36,7 +35,7 @@
             }
 
             .iron-selected {
-                border-left: 4px solid var(--primary-color);
+                border-left: 4px solid var(--app-accent-color);
             }
 
         </style>
