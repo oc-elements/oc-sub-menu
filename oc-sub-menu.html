@@ -30,10 +30,15 @@
 
             .iron-selected {
                 border-left: 4px solid var(--app-accent-color);
+                color: var(--primary-text-color);
+            }
+
+            .menu-container {
+                margin-top:var(--app-sub-menu-margin-top);
             }
 
         </style>
-        <app-menu>
+        <app-menu class="menu-container">
             <template is="dom-repeat" items="{{menus}}">
                 <!-- Enter here if nav item has sub menus -->
                 <template is="dom-if" if="[[_menuHasSubMenus(item.subMenus)]]">
