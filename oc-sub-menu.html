@@ -1,8 +1,6 @@
 <link rel="import" href="../polymer/polymer-element.html">
-
 <link rel="import" href="../app-menu/app-menu.html">
 <link rel="import" href="../app-menu/app-submenu.html">
-
 <link rel="import" href="../iron-icons/iron-icons.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
 
@@ -10,10 +8,8 @@
     <template>
         <style is="custom-style">
             :host {
-                --primary-color: #e0992f;
                 --app-menu-selected-bg-color: var(--app-secondary-color);
                 --app-menu-background-color: var(--app-primary-color);
-                --app-menu-border: 1px solid #483f36;
             }
 
             a {
@@ -28,10 +24,8 @@
                 margin-left: 50px;
             }
 
-            .app-menu-item {
-                font-size: 16px;
-                font-weight: 400;
-                padding-left: 10px;
+            .menu-icon {
+                padding-right:5px;
             }
 
             .iron-selected {
@@ -46,15 +40,15 @@
                     <app-submenu>
                         <div class="app-menu-item" slot="submenu-trigger">
                             <app-menu-icon-item>
-                                <iron-icon icon="[[item.icon]]"></iron-icon>
-                                <span style="font-size: 100%; vertical-align: middle">[[item.name]]</span>
+                                <iron-icon icon="[[item.icon]]" class="menu-icon"></iron-icon>
+                                <span>[[item.name]]</span>
                             </app-menu-icon-item>
                             <iron-icon icon="expand-more" class="expand-icon"></iron-icon>
                         </div>
                         <app-menu slot="submenu-content">
                             <template is="dom-repeat" items="{{item.subMenus}}" as="subMenu">
                                 <a class="app-menu-item sub-content" href="[[rootPath]][[subMenu.href]]">
-                                    <span style="font-size: 90%">[[subMenu.name]]</span>
+                                    <span>[[subMenu.name]]</span>
                                 </a>
                             </template>
                         </app-menu>
@@ -64,7 +58,7 @@
                 <template is="dom-if" if="[[!_menuHasSubMenus(item.subMenus)]]">
                     <a class="app-menu-item" href="[[rootPath]][[item.href]]">
                         <app-menu-icon-item>
-                            <iron-icon icon="[[item.icon]]"></iron-icon>
+                            <iron-icon icon="[[item.icon]]" class="menu-icon"></iron-icon>
                             [[item.name]]
                         </app-menu-icon-item>
                     </a>
@@ -73,14 +67,14 @@
         </app-menu>
     </template>
     <script>
-		class OcSubMenu extends Polymer.Element {
-			static get is() {
-				return 'oc-sub-menu';
-			}
+        class OcSubMenu extends Polymer.Element {
+            static get is() {
+                return 'oc-sub-menu';
+            }
 
-			static get properties() {
-				return {
-					/* Example of the menus property
+            static get properties() {
+                return {
+                    /* Example of the menus property
                       {
                         name: "Orders",
                         icon: "icons:shopping-cart" // Optional
@@ -96,19 +90,19 @@
                             },
                         ],
                     },*/
-					menus: {
-						type: Array,
-						value: [],
-					},
-				};
-			}
+                    menus: {
+                        type: Array,
+                        value: [],
+                    },
+                };
+            }
 
-			_menuHasSubMenus(subMenus) {
-				return subMenus && subMenus.length !== -1;
-			}
-		}
+            _menuHasSubMenus(subMenus) {
+                return subMenus && subMenus.length !== -1;
+            }
+        }
 
-		window.customElements.define(OcSubMenu.is, OcSubMenu);
+        window.customElements.define(OcSubMenu.is, OcSubMenu);
     </script>
 </dom-module>
 
