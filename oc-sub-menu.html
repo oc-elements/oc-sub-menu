@@ -51,7 +51,7 @@
                             <iron-icon icon="expand-more" class="expand-icon"></iron-icon>
                         </div>
                         <app-menu slot="submenu-content">
-                            <template is="dom-repeat" items="{{item.subMenus}}" as="subMenu">
+                            <template is="dom-repeat" items="{{item.subMenus}}" as="subMenu" filter="_isHidden">
                                 <a class="app-menu-item sub-content" href="[[rootPath]][[subMenu.href]]">
                                     <span>[[subMenu.name]]</span>
                                 </a>
@@ -101,6 +101,10 @@
                     },
                 };
             }
+
+			_isHidden(item) {
+				return !item.hidden;
+			}
 
             _menuHasSubMenus(subMenus) {
                 return subMenus && subMenus.length !== -1;
